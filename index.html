@@ -1,0 +1,644 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Birthday! 🎉</title>
+    <style>
+        :root {
+            --color-primary: #FF69B4;
+            --color-secondary: #FFD700;
+            --color-background: #FFF5F7;
+            --color-text: #333333;
+            --color-white: #FFFFFF;
+            --color-overlay: rgba(0, 0, 0, 0.8);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #FFF5F7 0%, #FFE8F0 100%);
+            color: var(--color-text);
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+        }
+
+        /* Confetti Animation */
+        .confetti-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1000;
+            overflow: hidden;
+        }
+
+        .confetti {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background: var(--color-secondary);
+            animation: confetti-fall linear infinite;
+        }
+
+        @keyframes confetti-fall {
+            to {
+                transform: translateY(100vh) rotate(360deg);
+            }
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 2rem;
+            position: relative;
+            background: linear-gradient(135deg, #FFE8F0 0%, #FFF5F7 50%, #FFE8CC 100%);
+        }
+
+        .balloon {
+            position: absolute;
+            font-size: 3rem;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .balloon:nth-child(1) { left: 10%; top: 20%; animation-delay: 0s; }
+        .balloon:nth-child(2) { left: 80%; top: 30%; animation-delay: 1s; }
+        .balloon:nth-child(3) { left: 15%; top: 60%; animation-delay: 2s; }
+        .balloon:nth-child(4) { right: 15%; top: 50%; animation-delay: 1.5s; }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(-5deg); }
+            50% { transform: translateY(-30px) rotate(5deg); }
+        }
+
+        .hero-content {
+            z-index: 10;
+            animation: fadeInUp 1s ease-out;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .hero h1 {
+            font-size: 4rem;
+            font-weight: bold;
+            background: linear-gradient(45deg, var(--color-primary), var(--color-secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .cake-icon {
+            font-size: 5rem;
+            margin: 1rem 0;
+            animation: bounce 2s ease-in-out infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+
+        .hero p {
+            font-size: 1.5rem;
+            color: var(--color-text);
+            margin: 1rem 0;
+            font-style: italic;
+        }
+
+        /* Section Styling */
+        .section {
+            padding: 4rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            text-align: center;
+            color: var(--color-primary);
+            margin-bottom: 2rem;
+            position: relative;
+            display: inline-block;
+            width: 100%;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 4px;
+            background: linear-gradient(90deg, var(--color-primary), var(--color-secondary));
+            border-radius: 2px;
+        }
+
+        /* Upload Buttons */
+        .upload-container {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-bottom: 3rem;
+        }
+
+        .upload-btn {
+            background: linear-gradient(135deg, var(--color-primary), #FF85C0);
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            font-size: 1.1rem;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(255, 105, 180, 0.4);
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .upload-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(255, 105, 180, 0.6);
+        }
+
+        .upload-btn:active {
+            transform: translateY(-1px);
+        }
+
+        input[type="file"] {
+            display: none;
+        }
+
+        /* Photo Gallery */
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .gallery-item {
+            position: relative;
+            overflow: hidden;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            aspect-ratio: 1;
+        }
+
+        .gallery-item:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 25px rgba(255, 105, 180, 0.3);
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .gallery-item::after {
+            content: '🔍';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 2rem;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .gallery-item:hover::after {
+            opacity: 1;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 3rem;
+            color: #999;
+            font-style: italic;
+        }
+
+        /* Lightbox */
+        .lightbox {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--color-overlay);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem;
+        }
+
+        .lightbox.active {
+            display: flex;
+        }
+
+        .lightbox-content {
+            max-width: 90%;
+            max-height: 90%;
+            position: relative;
+            animation: zoomIn 0.3s ease;
+        }
+
+        @keyframes zoomIn {
+            from {
+                transform: scale(0.8);
+                opacity: 0;
+            }
+            to {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        .lightbox img {
+            max-width: 100%;
+            max-height: 90vh;
+            border-radius: 10px;
+            box-shadow: 0 10px 50px rgba(0, 0, 0, 0.5);
+        }
+
+        .lightbox-close {
+            position: absolute;
+            top: -40px;
+            right: 0;
+            background: white;
+            border: none;
+            font-size: 2rem;
+            cursor: pointer;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--color-text);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        .lightbox-close:hover {
+            background: var(--color-primary);
+            color: white;
+        }
+
+        /* Video Section */
+        .video-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .video-item {
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            background: white;
+        }
+
+        .video-item video {
+            width: 100%;
+            display: block;
+            background: black;
+        }
+
+        /* Message Section */
+        .message-box {
+            background: white;
+            border-radius: 20px;
+            padding: 3rem;
+            box-shadow: 0 10px 40px rgba(255, 105, 180, 0.2);
+            text-align: center;
+            margin-top: 2rem;
+        }
+
+        .message-box p {
+            font-size: 1.3rem;
+            line-height: 1.8;
+            color: var(--color-text);
+            margin: 1rem 0;
+        }
+
+        .quote {
+            font-style: italic;
+            color: var(--color-primary);
+            border-left: 4px solid var(--color-secondary);
+            padding-left: 1.5rem;
+            margin: 2rem 0;
+            text-align: left;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .cake-icon {
+                font-size: 3rem;
+            }
+
+            .hero p {
+                font-size: 1.2rem;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+
+            .gallery {
+                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+                gap: 1rem;
+            }
+
+            .video-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .message-box {
+                padding: 2rem 1.5rem;
+            }
+
+            .message-box p {
+                font-size: 1.1rem;
+            }
+        }
+
+        /* Scroll Down Indicator */
+        .scroll-indicator {
+            position: absolute;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            animation: bounce-arrow 2s ease-in-out infinite;
+            font-size: 2rem;
+            cursor: pointer;
+        }
+
+        @keyframes bounce-arrow {
+            0%, 100% { transform: translate(-50%, 0); }
+            50% { transform: translate(-50%, 10px); }
+        }
+
+        .stars {
+            color: var(--color-secondary);
+            font-size: 1.5rem;
+            margin: 0.5rem;
+        }
+    </style>
+</head>
+<body>
+    <!-- Confetti Container -->
+    <div class="confetti-container" id="confettiContainer"></div>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="balloon">🎈</div>
+        <div class="balloon">🎈</div>
+        <div class="balloon">🎈</div>
+        <div class="balloon">🎈</div>
+        
+        <div class="hero-content">
+            <h1>Happy Birthday!</h1>
+            <div class="cake-icon">🎂</div>
+            <div class="stars">✨ ⭐ ✨</div>
+            <p>Wishing you a day filled with love, laughter, and unforgettable moments!</p>
+        </div>
+        
+        <div class="scroll-indicator" onclick="document.getElementById('upload-section').scrollIntoView({behavior: 'smooth'})">
+            ⬇️
+        </div>
+    </section>
+
+    <!-- Upload Section -->
+    <section class="section" id="upload-section">
+        <h2 class="section-title">📸 Create Your Memory Gallery</h2>
+        <div class="upload-container">
+            <button class="upload-btn" onclick="document.getElementById('photoInput').click()">
+                <span>📷</span> Upload Photos
+            </button>
+            <input type="file" id="photoInput" accept="image/*" multiple onchange="handlePhotoUpload(event)">
+            
+            <button class="upload-btn" onclick="document.getElementById('videoInput').click()">
+                <span>🎥</span> Upload Videos
+            </button>
+            <input type="file" id="videoInput" accept="video/*" multiple onchange="handleVideoUpload(event)">
+        </div>
+    </section>
+
+    <!-- Photo Gallery Section -->
+    <section class="section">
+        <h2 class="section-title">💝 Beautiful Memories</h2>
+        <div class="gallery" id="photoGallery">
+            <div class="empty-state">
+                <p>No photos yet! Click "Upload Photos" to add beautiful memories 📸</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Video Section -->
+    <section class="section">
+        <h2 class="section-title">🎬 Special Moments</h2>
+        <div class="video-grid" id="videoGallery">
+            <div class="empty-state">
+                <p>No videos yet! Click "Upload Videos" to add special moments 🎥</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Birthday Messages Section -->
+    <section class="section">
+        <h2 class="section-title">💌 Birthday Wishes</h2>
+        <div class="message-box">
+            <div class="stars">✨ 🌟 ✨</div>
+            <p>May your birthday be as wonderful as you are!</p>
+            <div class="quote">
+                "Here's to another year of amazing memories!"<br>
+                "Celebrating you today and always!"
+            </div>
+            <p>You bring so much joy and light to everyone around you. Today is all about celebrating the incredible person you are! 🎉</p>
+            <div class="stars">🎈 🎊 🎁 🎂 🎉</div>
+        </div>
+    </section>
+
+    <!-- Lightbox -->
+    <div class="lightbox" id="lightbox" onclick="closeLightbox(event)">
+        <div class="lightbox-content">
+            <button class="lightbox-close" onclick="closeLightbox(event)">×</button>
+            <img id="lightboxImage" src="" alt="">
+        </div>
+    </div>
+
+    <script>
+        // Store uploaded media
+        let photos = [];
+        let videos = [];
+
+        // Create confetti on page load
+        function createConfetti() {
+            const container = document.getElementById('confettiContainer');
+            const colors = ['#FF69B4', '#FFD700', '#FF85C0', '#FFC0CB', '#87CEEB'];
+            
+            for (let i = 0; i < 50; i++) {
+                const confetti = document.createElement('div');
+                confetti.className = 'confetti';
+                confetti.style.left = Math.random() * 100 + '%';
+                confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                confetti.style.animationDuration = (Math.random() * 3 + 2) + 's';
+                confetti.style.animationDelay = Math.random() * 2 + 's';
+                confetti.style.opacity = Math.random();
+                container.appendChild(confetti);
+            }
+        }
+
+        // Handle photo upload
+        function handlePhotoUpload(event) {
+            const files = event.target.files;
+            const gallery = document.getElementById('photoGallery');
+            
+            if (files.length > 0) {
+                // Remove empty state if it exists
+                const emptyState = gallery.querySelector('.empty-state');
+                if (emptyState) {
+                    emptyState.remove();
+                }
+                
+                Array.from(files).forEach(file => {
+                    if (file.type.startsWith('image/')) {
+                        const reader = new FileReader();
+                        
+                        reader.onload = function(e) {
+                            const photoData = e.target.result;
+                            photos.push(photoData);
+                            
+                            // Create gallery item
+                            const item = document.createElement('div');
+                            item.className = 'gallery-item';
+                            item.onclick = () => openLightbox(photoData);
+                            
+                            const img = document.createElement('img');
+                            img.src = photoData;
+                            img.alt = 'Birthday memory';
+                            
+                            item.appendChild(img);
+                            gallery.appendChild(item);
+                        };
+                        
+                        reader.readAsDataURL(file);
+                    }
+                });
+            }
+            
+            // Reset input
+            event.target.value = '';
+        }
+
+        // Handle video upload
+        function handleVideoUpload(event) {
+            const files = event.target.files;
+            const videoGallery = document.getElementById('videoGallery');
+            
+            if (files.length > 0) {
+                // Remove empty state if it exists
+                const emptyState = videoGallery.querySelector('.empty-state');
+                if (emptyState) {
+                    emptyState.remove();
+                }
+                
+                Array.from(files).forEach(file => {
+                    if (file.type.startsWith('video/')) {
+                        const videoURL = URL.createObjectURL(file);
+                        videos.push(videoURL);
+                        
+                        // Create video item
+                        const item = document.createElement('div');
+                        item.className = 'video-item';
+                        
+                        const video = document.createElement('video');
+                        video.src = videoURL;
+                        video.controls = true;
+                        video.preload = 'metadata';
+                        
+                        item.appendChild(video);
+                        videoGallery.appendChild(item);
+                    }
+                });
+            }
+            
+            // Reset input
+            event.target.value = '';
+        }
+
+        // Open lightbox
+        function openLightbox(imageSrc) {
+            const lightbox = document.getElementById('lightbox');
+            const lightboxImage = document.getElementById('lightboxImage');
+            lightboxImage.src = imageSrc;
+            lightbox.classList.add('active');
+        }
+
+        // Close lightbox
+        function closeLightbox(event) {
+            const lightbox = document.getElementById('lightbox');
+            const lightboxContent = document.querySelector('.lightbox-content');
+            
+            // Only close if clicking outside the image or on close button
+            if (event.target === lightbox || event.target.classList.contains('lightbox-close')) {
+                lightbox.classList.remove('active');
+            }
+        }
+
+        // Initialize confetti on page load
+        window.addEventListener('load', () => {
+            createConfetti();
+            
+            // Remove confetti after 10 seconds
+            setTimeout(() => {
+                const container = document.getElementById('confettiContainer');
+                container.style.opacity = '0';
+                container.style.transition = 'opacity 2s ease';
+            }, 8000);
+        });
+
+        // Keyboard support for lightbox
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                const lightbox = document.getElementById('lightbox');
+                lightbox.classList.remove('active');
+            }
+        });
+    </script>
+</body>
+</html>
